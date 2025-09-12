@@ -1,6 +1,6 @@
 # Контент-менеджмент. Универсальный инструмент для заработка в интернете: Нестеренко, Шантарин
 
-
+![](https://imo10.labirint.ru/books/640437/cover.jpg/242-0)
 ![](https://imo10.labirint.ru/books/640437/ph_01.jpg/242-0)
 
 ![Перейти к слайду 1](https://ssr.labirint.ru/v3/20250602-32614/nuxt/images/icons/slider/ArrowSlider.svg)

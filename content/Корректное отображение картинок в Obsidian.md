@@ -1,7 +1,7 @@
 ---
-title: "Моя заметка с картинкой"
+title: Моя заметка с картинкой
+url: https://phil-kat.github.io/public-notes/Корректное-отображение-картинок-в-Obsidian
 tags:
-  - publish
 ---
 
 

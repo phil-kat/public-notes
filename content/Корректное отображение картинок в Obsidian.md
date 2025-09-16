@@ -2,109 +2,148 @@
 url: https://phil-kat.github.io/public-notes/Корректное-отображение-картинок-в-Obsidian
 tags:
 ---
+Чтобы отображались картинки в Quartz, вам нужно внести несколько изменений в конфигурацию:
 
+## 1. Проверьте структуру папок
+Убедитесь, что картинки находятся в правильной папке:
+- Создайте папку `content` в корне проекта
+- Поместите картинки в папку `content` или её подпапки
 
-Отличный вопрос! Это одна из ключевых возможностей для создания личной базы знаний в Obsidian.
+## 2. Обновите конфигурацию
 
-Связка **Quartz → Obsidian** работает по следующему принципу:
-*   **Obsidian** — это ваше **личное** приложение для работы с заметками, где вы пишете и редактируете.
-*   **Quartz** — это **генератор статических сайтов**, который берет ваши заметки из Obsidian и преобразует их в красивый публичный сайт.
-
-Чтобы вставить изображение так, чтобы оно корректно отображалось и в Obsidian, и на сгенерированном Quartz-сайте, нужно следовать определенным правилам.
-
-### Правильный способ вставки изображений (пошагово)
-
-#### 1. Подготовка: Структура папок
-
-Самая надежная и рекомендуемая практика — создать специальную папку для медиа-файлов в корне вашего хранилища Obsidian. Обычно ее называют `assets`, `attachments` или `images`.
-
-Рекомендуемая структура:
-```
-Ваше хранилище Obsidian/
-├── 📁 assets/ (или attachments/)
-│   └── 📁 images/ (может быть и просто assets без вложенной images)
-│       └── my-cool-image.png
-├── 📁 content/
-│   └── МояЗаметка.md
-└── 📁 quartz/
-    └── (папка с самим Quartz)
+Замените эту строку:
+```javascript
+ignorePatterns: ["private", "templates", ".obsidian"],
 ```
 
-#### 2. Вставка изображения в заметку
-
-**Никогда не используйте абсолютные пути (`C:/Users/...`) или вставку через меню "Копировать изображение" из интернета.** Obsidian не сможет их найти.
-
-**Правильный способ:**
-
-1.  Скопируйте ваше изображение (`image.png`) в папку `assets/images/` внутри вашего хранилища Obsidian.
-2.  В нужной заметке вставьте следующую разметку:
-
-    ```markdown
-    ![[image.png]]
-    ```
-    *Это синтаксис Obsidian для вставки внутренних ссылок на файлы.*
-
-3.  **Важный шаг для Quartz:** Чтобы эта заметка корректно отображалась в сети, вам нужно **explicitly** опубликовать и саму заметку, и изображение. Для этого добавьте в начало заметки специальный блок фронтмэттера (frontmatter) с тегами:
-
-    ```markdown
-    ---
-    title: "Моя заметка с картинкой"
-    tags:
-      - publish
-    ---
-
-    ![[image.png]]
-    ```
-
-    Тег `publish` говорит Quartz: "Включи эту заметку на сайт". По умолчанию Quartz не публикует заметки без этого тега.
-
-#### 3. Конфигурация Quartz
-
-Чтобы Quartz понял, где искать ваши изображения, его нужно правильно настроить.
-
-1.  Откройте файл конфигурации Quartz: `quartz.config.ts` или `quartz/cfg.ts` (зависит от версии).
-2.  Найдите секцию, отвечающую за плагины обработки Markdown (часто это `transformers` -> `Plugin.ObsidianFlavoredMarkdown`).
-3.  Убедитесь, что в опциях этого плагина активирована поддержка ссылок на медиафайлы и указан правильный путь. Это может выглядеть так:
-
-    ```typescript
-    Plugin.ObsidianFlavoredMarkdown({
-      enableInHtmlEmbed: true, // разрешает встраивание
-      enableEmbed: true, // разрешает встраивание ![[...]]
-      ...
-    }),
-    ```
-
-4.  Также критически важно настроить плагин `Assets` (или его аналог), который отвечает за копирование самих файлов изображений в итоговую сборку сайта. Убедитесь, что он активен и смотрит на вашу папку `assets`.
-
-#### 4. Деплой (развертывание)
-
-После того как вы все настроили и добавили тег `publish`, запустите процесс сборки Quartz:
-
-```bash
-# Перейдите в папку quartz
-cd путь/к/вашей/папке/quartz
-
-# Запустите сборку (команда может немного отличаться)
-npx quartz build
-# или
-npm run build
+На:
+```javascript
+ignorePatterns: ["private", "templates"],
 ```
 
-Quartz скопирует вашу заметку и все связанные с ней изображения из папки `assets` в итоговую папку `public` (или аналогичную), подготовив их для загрузки на хостинг (например, GitHub Pages).
+Или добавьте исключение для папки с изображениями, если она у вас есть.
 
----
+## 3. Проверьте синтаксис Markdown
+Убедитесь, что в ваших Markdown-файлах картинки добавлены правильно:
+```markdown
+![Описание изображения](./путь/к/изображению.jpg)
+```
 
-### Краткая шпаргалка:
+## 4. Добавьте обработку ресурсов
+Убедитесь, что плагин `Assets()` включен в emitters (у вас он уже есть):
 
-1.  **Создай папку** `assets/images` в корне хранилища.
-2.  **Кинь картинку** в эту папку.
-3.  **Вставь в заметку:** `![[название-картинки.png]]`.
-4.  **Добавь фронтмэттер** с тегом `publish` в начало заметки.
-5.  **Убедись**, что в конфиге Quartz активированы плагины `ObsidianFlavoredMarkdown` и `Assets`.
-6.  **Запусти** `npx quartz build`.
+```javascript
+emitters: [
+  // ... другие плагины
+  Plugin.Assets(), // Этот плагин обрабатывает изображения
+  Plugin.Static(),
+  // ... остальные плагины
+],
+```
 
-Если вы все сделали правильно, после деплоя ваша заметка будет доступна по адресу вашего сайта, а изображение будет корректно отображаться.
+## 5. Полная проверенная конфигурация
 
- 
-https://phil-kat.github.io/public-notes/Корректное-отображение-картинок-в-Obsidian
+```javascript
+import { QuartzConfig } from "./quartz/cfg"
+import * as Plugin from "./quartz/plugins"
 
+const config: QuartzConfig = {
+  configuration: {
+    pageTitle: "Дом, в котором",
+    pageTitleSuffix: "",
+    enableSPA: true,
+    enablePopovers: true,
+    analytics: {
+      provider: "plausible",
+    },
+    locale: "ru-RU", // Изменил на русскую локаль
+    baseUrl: "quartz.jzhao.xyz",
+    ignorePatterns: ["private", "templates"], // Убрал .obsidian
+    defaultDateType: "modified",
+    theme: {
+      fontOrigin: "googleFonts",
+      cdnCaching: true,
+      typography: {
+        header: "Schibsted Grotesk",
+        body: "Source Sans Pro",
+        code: "IBM Plex Mono",
+      },
+      colors: {
+        lightMode: {
+          light: "#faf8f8",
+          lightgray: "#e5e5e5",
+          gray: "#b8b8b8",
+          darkgray: "#4e4e4e",
+          dark: "#2b2b2b",
+          secondary: "#284b63",
+          tertiary: "#84a59d",
+          highlight: "rgba(143, 159, 169, 0.15)",
+          textHighlight: "#fff23688",
+        },
+        darkMode: {
+          light: "#161618",
+          lightgray: "#393639",
+          gray: "#646464",
+          darkgray: "#d4d4d4",
+          dark: "#ebebec",
+          secondary: "#7b97aa",
+          tertiary: "#84a59d",
+          highlight: "rgba(143, 159, 169, 0.15)",
+          textHighlight: "#b3aa0288",
+        },
+      },
+    },
+  },
+  plugins: {
+    transformers: [
+      Plugin.FrontMatter(),
+      Plugin.CreatedModifiedDate({
+        priority: ["frontmatter", "git", "filesystem"],
+      }),
+      Plugin.SyntaxHighlighting({
+        theme: {
+          light: "github-light",
+          dark: "github-dark",
+        },
+        keepBackground: false,
+      }),
+      Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: true }),
+      Plugin.GitHubFlavoredMarkdown(),
+      Plugin.TableOfContents(),
+      Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
+      Plugin.Description(),
+      Plugin.Latex({ renderEngine: "katex" }),
+    ],
+    filters: [Plugin.RemoveDrafts()],
+    emitters: [
+      Plugin.AliasRedirects(),
+      Plugin.ComponentResources(),
+      Plugin.ContentPage(),
+      Plugin.FolderPage(),
+      Plugin.TagPage(),
+      Plugin.ContentIndex({
+        enableSiteMap: true,
+        enableRSS: true,
+      }),
+      Plugin.Assets(), // Обрабатывает изображения
+      Plugin.Static(),
+      Plugin.Favicon(),
+      Plugin.NotFoundPage(),
+      Plugin.CustomOgImages(),
+    ],
+  },
+}
+
+export default config
+```
+
+## 6. Дополнительные проверки:
+
+1. **Пути к изображениям**: Убедитесь, что пути относительные и правильные
+2. **Форматы изображений**: Поддерживаются JPG, PNG, GIF, SVG, WebP
+3. **Сборка**: После изменений пересоберите проект:
+   ```bash
+   npx quartz build
+   ```
+
+Если проблема persists, проверьте консоль браузера на ошибки загрузки ресурсов.

@@ -3,7 +3,7 @@
 // Базовые размеры для больших экранов (≥1000px)
 :root {
   --font-size-body: 21px;
-  --font-size-header: 2.0rem;
+  --font-size-header: 2.2rem;
   --font-size-h2: 1.8rem;
   --font-size-h3: 1.5rem;
   --font-size-h4: 1.3rem;
@@ -59,7 +59,7 @@ code {
 @media (max-width: 1000px) {
   :root {
     --font-size-body: 18px;
-    --font-size-header: 1.8rem;
+    --font-size-header: 2.0rem;
     --font-size-h2: 1.7rem;
     --font-size-h3: 1.4rem;
     --font-size-h4: 1.2rem;
@@ -74,7 +74,7 @@ code {
 @media (max-width: 480px) {
   :root {
     --font-size-body: 18px;
-    --font-size-header: 1.6rem;
+    --font-size-header: 1.8rem;
     --font-size-h2: 1.5rem;
     --font-size-h3: 1.3rem;
     --font-size-h4: 1.1rem;

@@ -28,12 +28,6 @@ const config: QuartzConfig = {
         body: "Ysabeau Infant",
         code: "IBM Plex Mono",
       },
-      fontSize: {
-        body: 18, 
-        header: 2.2,
-        h2: 1.8,
-        h3: 1.5,
-      },
       colors: {
         lightMode: {
           light: "#faf8f8",

@@ -27,8 +27,9 @@ const config: QuartzConfig = {
         headerWeight: "600",
         body: "Ysabeau Infant",
         code: "IBM Plex Mono",
-        fontSize: {
-          body: "18px", // Увеличиваем базовый размер
+      },
+      fontSize: {
+        body: "18px", // Увеличиваем базовый размер
         },
       },
       colors: {

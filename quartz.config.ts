@@ -25,7 +25,7 @@ const config: QuartzConfig = {
       typography: {
         header: "Montserrat Alternates",
         headerWeight: "600",
-        body: "Source Sans Pro",
+        body: "Ysabeau Infant",
         code: "IBM Plex Mono",
       },
       colors: {

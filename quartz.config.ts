@@ -27,8 +27,14 @@ const config: QuartzConfig = {
         headerWeight: "600",
         body: "Ysabeau Infant",
         code: "IBM Plex Mono",
-      },
     },
+      fontSize: {
+        body: "18px", 
+        header: "2.2rem",
+        h2: "1.8rem",
+        h3: "1.5rem",
+      },
+      
       colors: {
         lightMode: {
           light: "#faf8f8",

@@ -30,8 +30,8 @@ const config: QuartzConfig = {
       },
       fontSize: {
         body: "18px", // Увеличиваем базовый размер
-        },
       },
+    },
       colors: {
         lightMode: {
           light: "#faf8f8",

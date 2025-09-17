@@ -73,7 +73,7 @@ code {
 // Для очень маленьких экранов (<480px)
 @media (max-width: 480px) {
   :root {
-    --font-size-body: 17px;
+    --font-size-body: 16px;
     --font-size-header: 1.8rem;
     --font-size-h2: 1.5rem;
     --font-size-h3: 1.3rem;
@@ -81,7 +81,7 @@ code {
     --font-size-h5: 1.0rem;
     --font-size-h6: 0.95rem;
     --font-size-small: 0.8rem;
-    --line-height-body: 1.0;
+    --line-height-body: 1.2;
   }
 
   body {
